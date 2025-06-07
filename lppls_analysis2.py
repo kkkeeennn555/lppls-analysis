@@ -87,3 +87,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    os.makedirs('results', exist_ok=True)
+pd.DataFrame([...]).to_csv('results/output.csv', index=False)
+
