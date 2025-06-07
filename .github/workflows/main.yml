@@ -24,7 +24,7 @@ jobs:
 
       - name: LPPLS 分析スクリプトを実行
         run: |
-          Rscript path/to/your/lppls_analysis.R
+          Rscript scripts/lppls_analysis.R
 
       - name: 結果をコミット＆プッシュ
         run: |
