@@ -1,0 +1,35 @@
+name: LPPLS Analysis
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'     # 6時間おき
+  push:
+    branches:
+      - main                # main ブランチに push があったときも動く
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ソースをチェックアウト
+        uses: actions/checkout@v3
+
+      - name: R をセットアップ
+        uses: r-lib/actions/setup-r@v2
+
+      - name: パッケージをインストール
+        run: |
+          Rscript -e 'install.packages(c("quantmod","pracma","tseries","urca","lomb","rugarch","boot","forecast"))'
+
+      - name: LPPLS 分析スクリプトを実行
+        run: |
+          Rscript path/to/your/lppls_analysis.R
+
+      - name: 結果をコミット＆プッシュ
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add results/
+          git commit -m "Update LPPLS results [skip ci]" || echo "no changes to commit"
+          git push
